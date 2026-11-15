@@ -19,7 +19,19 @@
         </header>
 
         <main>
-            <p>{{ lessons.length }} lessons available.</p>
+
+            <!-- One card per lesson -->
+            <div class="lesson-list">
+                <div class="lesson" v-for="lesson in lessons" v-bind:key="lesson._id">
+                    <img v-bind:src="imageUrl(lesson)" v-bind:alt="lesson.topic">
+                    <div class="lesson-details">
+                        <p class="subject"><strong>Subject:</strong> {{ lesson.topic }}</p>
+                        <p><strong>Location:</strong> {{ lesson.location }}</p>
+                        <p><strong>Price:</strong> £{{ lesson.price }}</p>
+                        <p><strong>Spaces:</strong> {{ lesson.space }}</p>
+                    </div>
+                </div>
+            </div>
         </main>
 
     </div>
@@ -33,6 +45,12 @@
                     sitename: "After-School Lessons",
                     lessons: lessonsArray,      // the array in lessons.js
                 };
+            },
+
+            methods: {
+                imageUrl(lesson) {
+                    return "images/" + lesson.image;
+                },
             },
         });
 
