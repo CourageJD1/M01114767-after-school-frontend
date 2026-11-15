@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After-School Lessons</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="lessons.js"></script>
+</head>
+<body>
+
+    <div id="app">
+
+        <header>
+            <h1><i class="fa fa-graduation-cap" aria-hidden="true"></i> {{ sitename }}</h1>
+        </header>
+
+        <main>
+            <p>{{ lessons.length }} lessons available.</p>
+        </main>
+
+    </div>
+
+    <script type="module">
+        const { createApp } = Vue;
+
+        const lessonApp = createApp({
+            data() {
+                return {
+                    sitename: "After-School Lessons",
+                    lessons: lessonsArray,      // the array in lessons.js
+                };
+            },
+        });
+
+        lessonApp.mount("#app");
+    </script>
+
+</body>
+</html>

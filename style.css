@@ -1,0 +1,33 @@
+/* ---------- Page ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1f2933;
+    background-color: #f3f5f8;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 32px;
+    color: white;
+    background-color: #1d3557;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+}
