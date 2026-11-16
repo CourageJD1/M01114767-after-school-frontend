@@ -16,10 +16,17 @@
 
         <header>
             <h1><i class="fa fa-graduation-cap" aria-hidden="true"></i> {{ sitename }}</h1>
-            <p class="cart-count"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart ({{ cartItemCount }})</p>
+
+            <!-- Disabled while the cart is empty, but never while the cart page is open,
+                 so the user can always get back to the lessons -->
+            <button class="cart-button" v-on:click="toggleCart" v-bind:disabled="cart.length === 0 && !showCart">
+                <span v-if="showCart"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to lessons</span>
+                <span v-else><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart ({{ cartItemCount }})</span>
+            </button>
         </header>
 
-        <main>
+        <!-- Lessons page -->
+        <main v-if="!showCart">
 
             <!-- One card per lesson -->
             <div class="lesson-list">
@@ -40,6 +47,12 @@
             </div>
         </main>
 
+        <!-- Cart page -->
+        <main v-else>
+            <h2>Shopping Cart</h2>
+            <p>{{ cartItemCount }} space(s) in your cart.</p>
+        </main>
+
     </div>
 
     <script type="module">
@@ -51,6 +64,7 @@
                     sitename: "After-School Lessons",
                     lessons: lessonsArray,      // the array in lessons.js
                     cart: [],                   // lesson _id values, one entry per space
+                    showCart: false,            // false = lessons page, true = cart page
                 };
             },
 
@@ -75,6 +89,10 @@
 
                 canAddToCart(lesson) {
                     return lesson.space > 0;
+                },
+
+                toggleCart() {
+                    this.showCart = !this.showCart;
                 },
             },
         });

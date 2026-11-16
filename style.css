@@ -94,7 +94,10 @@ button:disabled {
     margin-top: 12px;
 }
 
-.cart-count {
-    margin: 0;
-    font-size: 1rem;
+.cart-button {
+    background-color: #e76f51;
+}
+
+.cart-button:hover {
+    background-color: #d05a3d;
 }
