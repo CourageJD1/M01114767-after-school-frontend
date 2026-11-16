@@ -101,3 +101,42 @@ button:disabled {
 .cart-button:hover {
     background-color: #d05a3d;
 }
+
+/* ---------- Cart page ---------- */
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+    padding: 12px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.cart-item img {
+    width: 120px;
+    height: 90px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.cart-details {
+    flex: 1;
+}
+
+.cart-details p {
+    margin: 3px 0;
+}
+
+.remove-button {
+    background-color: #c0392b;
+}
+
+.remove-button:hover {
+    background-color: #a03024;
+}
+
+.message {
+    color: #52606d;
+}

@@ -50,7 +50,19 @@
         <!-- Cart page -->
         <main v-else>
             <h2>Shopping Cart</h2>
-            <p>{{ cartItemCount }} space(s) in your cart.</p>
+            <p class="message" v-if="cart.length === 0">Your cart is empty.</p>
+
+            <div class="cart-item" v-for="lesson in cartLessons" v-bind:key="lesson._id">
+                <img v-bind:src="imageUrl(lesson)" v-bind:alt="lesson.topic">
+                <div class="cart-details">
+                    <p class="subject">{{ lesson.topic }}</p>
+                    <p>{{ lesson.location }}, £{{ lesson.price }} per space</p>
+                    <p>Spaces in cart: {{ countInCart(lesson._id) }}</p>
+                </div>
+                <button class="remove-button" v-on:click="removeFromCart(lesson)">
+                    <i class="fa fa-trash" aria-hidden="true"></i> Remove
+                </button>
+            </div>
         </main>
 
     </div>
@@ -71,6 +83,11 @@
             computed: {
                 cartItemCount() {
                     return this.cart.length;
+                },
+
+                // The lessons that appear at least once in the cart
+                cartLessons() {
+                    return this.lessons.filter(lesson => this.cart.includes(lesson._id));
                 },
             },
 
@@ -93,6 +110,20 @@
 
                 toggleCart() {
                     this.showCart = !this.showCart;
+                },
+
+                // How many times this lesson id appears in the cart
+                countInCart(id) {
+                    return this.cart.filter(itemId => itemId === id).length;
+                },
+
+                // Takes one space out of the cart and gives it back to the lesson
+                removeFromCart(lesson) {
+                    const index = this.cart.indexOf(lesson._id);
+                    if (index !== -1) {
+                        this.cart.splice(index, 1);
+                        lesson.space++;
+                    }
                 },
             },
         });
