@@ -65,3 +65,36 @@ main {
     font-size: 1.15rem;
     color: #1d3557;
 }
+
+/* ---------- Buttons ---------- */
+button {
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: white;
+    background-color: #2a9d8f;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #21867a;
+}
+
+/* A disabled button stays on the page but looks greyed out */
+button:disabled {
+    color: #6b7280;
+    background-color: #c9ced6;
+    cursor: not-allowed;
+}
+
+.lesson-details button {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.cart-count {
+    margin: 0;
+    font-size: 1rem;
+}

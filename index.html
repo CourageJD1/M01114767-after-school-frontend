@@ -16,6 +16,7 @@
 
         <header>
             <h1><i class="fa fa-graduation-cap" aria-hidden="true"></i> {{ sitename }}</h1>
+            <p class="cart-count"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart ({{ cartItemCount }})</p>
         </header>
 
         <main>
@@ -29,6 +30,11 @@
                         <p><strong>Location:</strong> {{ lesson.location }}</p>
                         <p><strong>Price:</strong> £{{ lesson.price }}</p>
                         <p><strong>Spaces:</strong> {{ lesson.space }}</p>
+
+                        <!-- v-bind:disabled keeps the button visible at 0 spaces; v-if would hide it -->
+                        <button v-on:click="addToCart(lesson)" v-bind:disabled="!canAddToCart(lesson)">
+                            <i class="fa fa-cart-plus" aria-hidden="true"></i> Add to Cart
+                        </button>
                     </div>
                 </div>
             </div>
@@ -44,12 +50,31 @@
                 return {
                     sitename: "After-School Lessons",
                     lessons: lessonsArray,      // the array in lessons.js
+                    cart: [],                   // lesson _id values, one entry per space
                 };
+            },
+
+            computed: {
+                cartItemCount() {
+                    return this.cart.length;
+                },
             },
 
             methods: {
                 imageUrl(lesson) {
                     return "images/" + lesson.image;
+                },
+
+                // One click puts one space in the cart and takes one from the lesson
+                addToCart(lesson) {
+                    if (lesson.space > 0) {
+                        this.cart.push(lesson._id);
+                        lesson.space--;
+                    }
+                },
+
+                canAddToCart(lesson) {
+                    return lesson.space > 0;
                 },
             },
         });
