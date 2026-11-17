@@ -166,6 +166,43 @@ input {
     font-family: inherit;
 }
 
+/* ---------- Checkout ---------- */
+.checkout {
+    max-width: 420px;
+    margin-top: 28px;
+    padding: 18px 20px 22px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.checkout h2 {
+    margin-top: 0;
+}
+
+.checkout label {
+    margin-top: 12px;
+}
+
+.hint {
+    margin: 4px 0 0;
+    font-size: 0.85rem;
+    color: #c0392b;
+}
+
+.checkout-button {
+    width: 100%;
+    margin-top: 18px;
+}
+
+.confirmation {
+    margin: 16px 0 0;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: #14532d;
+    background-color: #dcfce7;
+}
+
 .message {
     color: #52606d;
 }

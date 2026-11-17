@@ -80,6 +80,25 @@
                     <i class="fa fa-trash" aria-hidden="true"></i> Remove
                 </button>
             </div>
+
+            <div class="checkout">
+                <h2>Checkout</h2>
+
+                <label>Name
+                    <input type="text" v-model="order.name" placeholder="Letters only">
+                </label>
+                <p class="hint" v-if="order.name !== '' && !isNameValid">Name must contain letters only.</p>
+
+                <label>Phone
+                    <input type="text" v-model="order.phone" placeholder="Numbers only">
+                </label>
+                <p class="hint" v-if="order.phone !== '' && !isPhoneValid">Phone must contain numbers only.</p>
+
+                <!-- Always shown; only enabled when the name and phone are both valid -->
+                <button class="checkout-button" v-on:click="submitOrder" v-bind:disabled="!canCheckout">Checkout</button>
+
+                <p class="confirmation" v-if="orderMessage">{{ orderMessage }}</p>
+            </div>
         </main>
 
     </div>
@@ -96,6 +115,8 @@
                     showCart: false,            // false = lessons page, true = cart page
                     sortAttribute: "topic",
                     sortOrder: "ascending",
+                    order: { name: "", phone: "" },
+                    orderMessage: "",
                 };
             },
 
@@ -125,6 +146,20 @@
                     });
                     return list;
                 },
+
+                // Letters and spaces only, at least one character
+                isNameValid() {
+                    return /^[A-Za-z ]+$/.test(this.order.name);
+                },
+
+                // Digits only, at least one
+                isPhoneValid() {
+                    return /^[0-9]+$/.test(this.order.phone);
+                },
+
+                canCheckout() {
+                    return this.isNameValid && this.isPhoneValid && this.cart.length > 0;
+                },
             },
 
             methods: {
@@ -137,6 +172,7 @@
                     if (lesson.space > 0) {
                         this.cart.push(lesson._id);
                         lesson.space--;
+                        this.orderMessage = "";
                     }
                 },
 
@@ -160,6 +196,12 @@
                         this.cart.splice(index, 1);
                         lesson.space++;
                     }
+                },
+
+                submitOrder() {
+                    this.orderMessage = "Thank you " + this.order.name + ", your order has been submitted!";
+                    this.cart = [];
+                    this.order = { name: "", phone: "" };
                 },
             },
         });
