@@ -28,9 +28,26 @@
         <!-- Lessons page -->
         <main v-if="!showCart">
 
+            <div class="controls">
+                <label>Sort by
+                    <select v-model="sortAttribute">
+                        <option value="topic">Subject</option>
+                        <option value="location">Location</option>
+                        <option value="price">Price</option>
+                        <option value="space">Spaces</option>
+                    </select>
+                </label>
+                <label>Order
+                    <select v-model="sortOrder">
+                        <option value="ascending">Ascending</option>
+                        <option value="descending">Descending</option>
+                    </select>
+                </label>
+            </div>
+
             <!-- One card per lesson -->
             <div class="lesson-list">
-                <div class="lesson" v-for="lesson in lessons" v-bind:key="lesson._id">
+                <div class="lesson" v-for="lesson in sortedLessons" v-bind:key="lesson._id">
                     <img v-bind:src="imageUrl(lesson)" v-bind:alt="lesson.topic">
                     <div class="lesson-details">
                         <p class="subject"><strong>Subject:</strong> {{ lesson.topic }}</p>
@@ -77,6 +94,8 @@
                     lessons: lessonsArray,      // the array in lessons.js
                     cart: [],                   // lesson _id values, one entry per space
                     showCart: false,            // false = lessons page, true = cart page
+                    sortAttribute: "topic",
+                    sortOrder: "ascending",
                 };
             },
 
@@ -88,6 +107,23 @@
                 // The lessons that appear at least once in the cart
                 cartLessons() {
                     return this.lessons.filter(lesson => this.cart.includes(lesson._id));
+                },
+
+                // The list the page actually shows: filtered, then sorted
+                sortedLessons() {
+                    let list = [...this.lessons];   // a copy, so the original array is never re-ordered
+
+                    const attribute = this.sortAttribute;
+                    list.sort((a, b) => {
+                        let result;
+                        if (typeof a[attribute] === "string") {
+                            result = a[attribute].localeCompare(b[attribute]);   // text: alphabetical
+                        } else {
+                            result = a[attribute] - b[attribute];                // numbers: smallest first
+                        }
+                        return this.sortOrder === "ascending" ? result : -result;
+                    });
+                    return list;
                 },
             },
 
